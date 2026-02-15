@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Query Flow Chat</title>
+  <style>
+    body {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      margin: 0;
+      background: #0d1117;
+      color: #c9d1d9;
+    }
+    .app {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 24px;
+    }
+    h1 {
+      font-size: 20px;
+      margin: 0 0 16px;
+      letter-spacing: 0.5px;
+      color: #f0f6fc;
+    }
+    .chat {
+      border: 1px solid #30363d;
+      border-radius: 12px;
+      padding: 16px;
+      background: #161b22;
+      min-height: 360px;
+    }
+    .message {
+      padding: 8px 0;
+      border-bottom: 1px dashed #30363d;
+    }
+    .message:last-child {
+      border-bottom: none;
+    }
+    .role {
+      color: #7ee787;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    .assistant .role {
+      color: #79c0ff;
+    }
+    .content {
+      margin-top: 6px;
+      white-space: pre-wrap;
+    }
+    .composer {
+      display: flex;
+      gap: 12px;
+      margin-top: 16px;
+    }
+    textarea {
+      flex: 1;
+      min-height: 80px;
+      background: #0d1117;
+      color: #c9d1d9;
+      border: 1px solid #30363d;
+      border-radius: 8px;
+      padding: 12px;
+      resize: vertical;
+    }
+    button {
+      background: #238636;
+      border: none;
+      border-radius: 8px;
+      color: #ffffff;
+      padding: 12px 18px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    button:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+    .hint {
+      margin-top: 8px;
+      font-size: 12px;
+      color: #8b949e;
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <h1>Query Flow Chat</h1>
+    <div id="chat" class="chat"></div>
+    <div class="composer">
+      <textarea id="input" placeholder="Tulis pesan..."></textarea>
+      <button id="send">Kirim</button>
+    </div>
+    <div class="hint">Streaming aktif. Riwayat disimpan di browser selama tab ini terbuka.</div>
+  </div>
+  <script src="/static/app.js"></script>
+</body>
+</html>
