@@ -18,7 +18,7 @@ Backend dibuat dengan FastAPI (Python) dan frontend sederhana memakai HTML + Jav
 ## Mulai Cepat
 
 ```bash
-python -m venv .venv
+python3 -m venv .venv
 source .venv/bin/activate
 pip install -r backend/requirements.txt
 export OPENROUTER_API_KEY=your_api_key_here

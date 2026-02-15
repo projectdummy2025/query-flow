@@ -7,7 +7,7 @@ Berikut langkah paling singkat untuk menjalankan proyek ini secara lokal.
 Buat virtual env dan install dependency:
 
 ```bash
-python -m venv .venv
+python3 -m venv .venv
 source .venv/bin/activate
 pip install -r backend/requirements.txt
 ```

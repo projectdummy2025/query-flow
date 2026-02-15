@@ -1,14 +1,8 @@
 import json
 import os
-from typing import Generator, Iterable, List, Optional
+from typing import Generator, List, Optional
 
 import httpx
-
-OPENROUTER_BASE_URL = os.getenv("OPENROUTER_BASE_URL", "https://openrouter.ai/api/v1")
-OPENROUTER_API_KEY = os.getenv("OPENROUTER_API_KEY", "")
-OPENROUTER_MODEL = os.getenv("OPENROUTER_MODEL", "meta-llama/llama-3-8b-instruct")
-OPENROUTER_APP_URL = os.getenv("OPENROUTER_APP_URL", "")
-OPENROUTER_APP_NAME = os.getenv("OPENROUTER_APP_NAME", "")
 
 
 class OpenRouterError(RuntimeError):
@@ -16,26 +10,32 @@ class OpenRouterError(RuntimeError):
 
 
 def _build_headers() -> dict:
-    if not OPENROUTER_API_KEY:
+    api_key = os.getenv("OPENROUTER_API_KEY", "")
+    app_url = os.getenv("OPENROUTER_APP_URL", "")
+    app_name = os.getenv("OPENROUTER_APP_NAME", "")
+
+    if not api_key:
         raise OpenRouterError("OPENROUTER_API_KEY is not set")
 
     headers = {
-        "Authorization": f"Bearer {OPENROUTER_API_KEY}",
+        "Authorization": f"Bearer {api_key}",
         "Content-Type": "application/json",
     }
 
-    if OPENROUTER_APP_URL:
-        headers["HTTP-Referer"] = OPENROUTER_APP_URL
-    if OPENROUTER_APP_NAME:
-        headers["X-Title"] = OPENROUTER_APP_NAME
+    if app_url:
+        headers["HTTP-Referer"] = app_url
+    if app_name:
+        headers["X-Title"] = app_name
 
     return headers
 
 
 def chat(messages: List[dict], model: Optional[str] = None) -> dict:
-    url = f"{OPENROUTER_BASE_URL}/chat/completions"
+    base_url = os.getenv("OPENROUTER_BASE_URL", "https://openrouter.ai/api/v1")
+    default_model = os.getenv("OPENROUTER_MODEL", "meta-llama/llama-3-8b-instruct")
+    url = f"{base_url}/chat/completions"
     payload = {
-        "model": model or OPENROUTER_MODEL,
+        "model": model or default_model,
         "messages": messages,
         "stream": False,
     }
@@ -50,9 +50,11 @@ def chat(messages: List[dict], model: Optional[str] = None) -> dict:
 
 
 def stream_chat(messages: List[dict], model: Optional[str] = None) -> Generator[str, None, None]:
-    url = f"{OPENROUTER_BASE_URL}/chat/completions"
+    base_url = os.getenv("OPENROUTER_BASE_URL", "https://openrouter.ai/api/v1")
+    default_model = os.getenv("OPENROUTER_MODEL", "meta-llama/llama-3-8b-instruct")
+    url = f"{base_url}/chat/completions"
     payload = {
-        "model": model or OPENROUTER_MODEL,
+        "model": model or default_model,
         "messages": messages,
         "stream": True,
     }
