@@ -68,15 +68,19 @@ async function streamChat() {
 
       for (const line of lines) {
         if (!line.startsWith("data:")) continue;
-        const payload = line.replace("data:", "").trim();
+        let payload = line.slice(5);
+        if (payload.startsWith(" ")) {
+          payload = payload.slice(1);
+        }
+        const control = payload.trim();
 
-        if (payload === "[DONE]") {
+        if (control === "[DONE]") {
           messages[messages.length - 1].content = assistantText;
           return;
         }
 
-        if (payload.startsWith("[ERROR]")) {
-          assistantContentEl.textContent = payload;
+        if (control.startsWith("[ERROR]")) {
+          assistantContentEl.textContent = control;
           return;
         }
 
